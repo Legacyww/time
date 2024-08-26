@@ -1,0 +1,57 @@
+#include <iostream>
+
+using namespace std;
+
+class Time {
+private:
+	unsigned int hour;
+	unsigned int min;
+	unsigned int sec;
+public:
+	Time() : hour(0), min(0), sec(0) {
+
+	}
+	Time(int h, int m, int s) : hour(h), min(m), sec(s) {
+		if (h < 0) {
+			hour *=-1;
+		}
+		if (m < 0) {
+			min *=-1;
+		}
+		if (s < 0) {
+			sec *=-1;
+		}
+	}
+	void display() const {
+		cout << "Time: " << hour << ":" << min << ":" << sec << endl;
+	}
+	Time add_time(Time) const;
+};
+
+Time Time::add_time(Time t) const {
+	Time temp;
+	temp.hour = hour + t.hour;
+	temp.min = min + t.min;
+	temp.sec = sec + t.sec;
+
+	while (temp.sec >= 60) {
+		temp.sec -= 60;
+		temp.min += 1;
+	}
+	while (temp.min >= 60) {
+		temp.min -= 60;
+		temp.hour += 1;
+	}
+	return temp;
+}
+
+int main() {
+	Time t1(2,-13,78), t2(5,-0,52), t3;
+
+	t3 = t1.add_time(t2);
+	t1.display();
+	t2.display();
+	t3.display();
+
+	return 0;
+}
